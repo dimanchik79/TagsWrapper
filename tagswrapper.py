@@ -1,7 +1,6 @@
 
 import sys
 from PyQt5.QtWidgets import QApplication
-from models import DB, engine
 
 from GUI.guis import MainClass
 
@@ -15,5 +14,4 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-    DB.metadata.create_all(engine)
     main()
