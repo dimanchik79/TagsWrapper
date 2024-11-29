@@ -1,11 +1,12 @@
 import json
+from multiprocessing.spawn import old_main_modules
 from os import path
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QFileDialog
 
 from models import DB, engine
-from tagssettings import TAGS
+from tagssettings import TAGS, SETTINGS
 
 class MainClass(QMainWindow):
     def __init__(self) -> None:
@@ -14,47 +15,73 @@ class MainClass(QMainWindow):
         uic.loadUi("GUI/gui.ui", self)
         self.setFixedSize(1271, 871)
 
-        buttons = (self.btn_div,self.btn_span, self.btn_b, self.btn_i, self.btn_br, self.btn_hr, self.btn_sup,
-                   self.btn_sub, self.btn_tleft, self.btn_tcenter, self.btn_tjustify, self.btn_tright, self.btn_li,
-                   self.btn_th, self.btn_tr, self.btn_td, self.btn_p, self.btn_ul, self.btn_table)
+        buttons = {'div': self.btn_div, 'span': self.btn_span, 'b': self.btn_b, 'i': self.btn_i, 'br': self.btn_br,
+                   'hr': self.btn_hr, 'sup': self.btn_sup, 'sub': self.btn_sub, 'tleft': self.btn_tleft,
+                   'tcenter': self.btn_tcenter, 'tjustify': self.btn_tjustify, 'tright':self.btn_tright,
+                   'li': self.btn_li, 'th': self.btn_th, 'tr': self.btn_tr, 'td': self.btn_td, 'p': self.btn_p,
+                   'ul': self.btn_ul, 'table': self.btn_table, 'ulli': self.btn_ulli
+                   }
 
-        if path.exists('temp.json'):
+        if path.exists('settings.json'):
             with open('temp.json', 'r') as file:
                 temp = json.load(file)
 
-        buttons[0].clicked.connect(lambda: self.wrapped(0))
-        buttons[1].clicked.connect(lambda: self.wrapped(1))
-        buttons[2].clicked.connect(lambda: self.wrapped(2))
-        buttons[3].clicked.connect(lambda: self.wrapped(3))
-        buttons[4].clicked.connect(lambda: self.wrapped(4))
-        buttons[5].clicked.connect(lambda: self.wrapped(5))
-        buttons[6].clicked.connect(lambda: self.wrapped(6))
-        buttons[7].clicked.connect(lambda: self.wrapped(7))
-        buttons[8].clicked.connect(lambda: self.wrapped(8))
-        buttons[9].clicked.connect(lambda: self.wrapped(9))
-        buttons[10].clicked.connect(lambda: self.wrapped(10))
-        buttons[11].clicked.connect(lambda: self.wrapped(11))
-        buttons[12].clicked.connect(lambda: self.wrapped(12))
-        buttons[13].clicked.connect(lambda: self.wrapped(13))
-        buttons[14].clicked.connect(lambda: self.wrapped(14))
-        buttons[15].clicked.connect(lambda: self.wrapped(15))
+        buttons["div"].clicked.connect(lambda: self.wrapped("div"))
+        buttons["span"].clicked.connect(lambda: self.wrapped("span"))
+        buttons["b"].clicked.connect(lambda: self.wrapped("b"))
+        buttons["i"].clicked.connect(lambda: self.wrapped("i"))
+        buttons["br"].clicked.connect(lambda: self.wrapped("br"))
+        buttons["hr"].clicked.connect(lambda: self.wrapped("hr"))
+        buttons["sub"].clicked.connect(lambda: self.wrapped("sub"))
+        buttons["sup"].clicked.connect(lambda: self.wrapped("sup"))
+        buttons["tleft"].clicked.connect(lambda: self.wrapped("tleft"))
+        buttons["tcenter"].clicked.connect(lambda: self.wrapped("tright"))
+        buttons["tjustify"].clicked.connect(lambda: self.wrapped("tjustify"))
+        buttons["tright"].clicked.connect(lambda: self.wrapped("tright"))
+        buttons["li"].clicked.connect(lambda: self.wrapped("li"))
+        buttons["tr"].clicked.connect(lambda: self.wrapped("tr"))
+        buttons["th"].clicked.connect(lambda: self.wrapped("th"))
+        buttons["td"].clicked.connect(lambda: self.wrapped("td"))
 
-        buttons[16].clicked.connect(lambda: self.wrapped(16))
-        buttons[17].clicked.connect(lambda: self.wrapped(17))
-        buttons[18].clicked.connect(lambda: self.wrapped(18))
+        buttons["p"].clicked.connect(lambda: self.wrapped("p"))
+        buttons["ul"].clicked.connect(lambda: self.wrapped("ul"))
+        buttons["table"].clicked.connect(lambda: self.wrapped("table"))
+        buttons["ulli"].clicked.connect(lambda: self.wrapped("ulli"))
 
         self.btn_paste.clicked.connect(self.paste_text)
         self.btn_clear.clicked.connect(self.clear_text)
         self.btn_dir.clicked.connect(self.change_directory)
 
-    def wrapped(self, tag_count):
-        style_text = f' style="{self.t_style.text()}"' if self.addstyle.isChecked() else ''
-        open_tag = TAGS[tag_count][0].replace('*style*', style_text)
-        close_tag = TAGS[tag_count][1]
-        old_text = self.textarea.textCursor().selectedText()
+        self.btn_exit.clicked.connect(lambda: self.close())
+
+    def closeEvent(self, event):
+        print("Close")
+        self.close()
+
+    def wrapped(self, tag_name):
+        text, new_text, style_text = '', '', ''
         cursor = self.textarea.textCursor()
+        if self.addstyle.isChecked():
+            if tag_name in ['ul', 'p']:
+                style_text = f'{self.t_style.text()}'
+            else:
+                style_text = f' style="{self.t_style.text()}"' if self.addstyle.isChecked() else ''
+        old_text = self.textarea.textCursor().selectedText()
         cursor.removeSelectedText()
-        cursor.insertText(f"{open_tag}{old_text}{close_tag}")
+        open_tag = TAGS[tag_name][0].replace('*style*', style_text)
+        close_tag = TAGS[tag_name][1]
+        if tag_name in ["ulli", "p"]:
+            text_list = old_text.split("\u2029")
+            for line in text_list:
+                core_text = line[1:].strip() if (line[0] == "-" and tag_name == "ulli") else line.strip()
+                new_text += f"{open_tag}{core_text}{close_tag}\n"
+            else:
+                new_text = new_text[:-1]
+                if tag_name == "ulli":
+                    new_text = f"{TAGS['ul'][0]}\n{new_text}\n{TAGS['ul'][1]}"
+            cursor.insertText(new_text)
+        else:
+            cursor.insertText(f"{open_tag}{old_text}{close_tag}")
         self.textarea.setFocus()
 
     def paste_text(self):
@@ -67,6 +94,7 @@ class MainClass(QMainWindow):
                                      QMessageBox.Cancel | QMessageBox.Yes)
         if reply == QMessageBox.Yes:
             self.textarea.clear()
+        self.textarea.setFocus()
 
     def change_directory(self):
         directory = QFileDialog.getExistingDirectory(self, "Select working directory")

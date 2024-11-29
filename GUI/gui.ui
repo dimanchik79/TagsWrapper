@@ -347,7 +347,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>1050</x>
-      <y>297</y>
+      <y>300</y>
       <width>211</width>
       <height>31</height>
      </rect>
@@ -616,7 +616,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>1050</x>
-      <y>517</y>
+      <y>524</y>
       <width>131</width>
       <height>20</height>
      </rect>
@@ -925,6 +925,31 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="text">
      <string>Work directory</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>1130</x>
+      <y>682</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../IMG/help.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
