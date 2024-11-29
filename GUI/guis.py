@@ -2,7 +2,7 @@ import json
 from os import path
 
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QFileDialog
 
 from models import DB, engine
 from tagssettings import TAGS
@@ -45,8 +45,7 @@ class MainClass(QMainWindow):
 
         self.btn_paste.clicked.connect(self.paste_text)
         self.btn_clear.clicked.connect(self.clear_text)
-
-        self.textarea.textChanged.connect(self.on_text_changed)
+        self.btn_dir.clicked.connect(self.change_directory)
 
     def wrapped(self, tag_count):
         style_text = f' style="{self.t_style.text()}"' if self.addstyle.isChecked() else ''
@@ -69,5 +68,7 @@ class MainClass(QMainWindow):
         if reply == QMessageBox.Yes:
             self.textarea.clear()
 
-    def on_text_changed(self):
-        pass
+    def change_directory(self):
+        directory = QFileDialog.getExistingDirectory(self, "Select working directory")
+        self.t_dir.setText(directory)
+        self.textarea.setFocus()
