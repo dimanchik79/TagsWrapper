@@ -1,6 +1,8 @@
+import json
+import os.path
+
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QFileDialog, QDialog
-from models import DB, engine
 from tagssettings import TAGS, HELP
 
 
@@ -32,14 +34,18 @@ class MainClass(QMainWindow):
 
         buttons = {'div': self.btn_div, 'span': self.btn_span, 'b': self.btn_b, 'i': self.btn_i, 'br': self.btn_br,
                    'hr': self.btn_hr, 'sup': self.btn_sup, 'sub': self.btn_sub, 'tleft': self.btn_tleft,
-                   'tcenter': self.btn_tcenter, 'tjustify': self.btn_tjustify, 'tright':self.btn_tright,
+                   'tcenter': self.btn_tcenter, 'tjustify': self.btn_tjustify, 'tright': self.btn_tright,
                    'li': self.btn_li, 'th': self.btn_th, 'tr': self.btn_tr, 'td': self.btn_td, 'p': self.btn_p,
                    'ul': self.btn_ul, 'table': self.btn_table, 'ulli': self.btn_ulli
                    }
 
-        # if path.exists('settings.json'):
-        #     with open('temp.json', 'r') as file:
-        #         temp = json.load(file)
+        if os.path.exists('settings.json'):
+            with open('settings.json', 'r') as file:
+                settings = json.load(file)
+                self.t_dir.setText(settings['dir'])
+                self.addstyle.setCheckState(settings['addstyle'])
+                self.t_style.setText(settings['style'])
+                self.textarea.setPlainText(settings['txt'])
 
         buttons["div"].clicked.connect(lambda: self.wrapped("div"))
         buttons["span"].clicked.connect(lambda: self.wrapped("span"))
@@ -67,13 +73,22 @@ class MainClass(QMainWindow):
         self.btn_clear.clicked.connect(self.clear_text)
         self.btn_dir.clicked.connect(self.change_directory)
         self.btn_preview.clicked.connect(self.preview)
-        self.btn_undo.clicked.connect(lambda : self.comeback("undo"))
-        self.btn_redo.clicked.connect(lambda : self.comeback("redo"))
+        self.btn_undo.clicked.connect(lambda: self.comeback("undo"))
+        self.btn_redo.clicked.connect(lambda: self.comeback("redo"))
         self.btn_help.clicked.connect(self.help)
 
+        self.btn_stemp.clicked.connect(lambda: self.load_save_file("w"))
+        self.btn_ltemp.clicked.connect(lambda: self.load_save_file("r"))
         self.btn_exit.clicked.connect(lambda: self.close())
 
     def closeEvent(self, event):
+        settings = dict()
+        settings['dir'] = self.t_dir.text()
+        settings['addstyle'] = self.addstyle.isChecked()
+        settings['style'] = self.t_style.text()
+        settings['txt'] = self.textarea.toPlainText()
+        with open('settings.json', 'w') as file:
+            json.dump(settings, file)
         self.close()
 
     def wrapped(self, tag_name):
@@ -139,3 +154,26 @@ class MainClass(QMainWindow):
         dialog = Help()
         dialog.show()
         dialog.exec_()
+
+    def file_exist(self, path, descriptor):
+        self.textarea.setFocus()
+        if self.t_dir.text() == "":
+            QMessageBox.question(self, "Error!!!", "Select the work directory", QMessageBox.Ok)
+            return False
+        if path is False and descriptor == "r":
+            QMessageBox.question(self, "Error!!!", "wrapped.txt not found!!!", QMessageBox.Ok)
+            return False
+        if descriptor == "w" or (path and descriptor == "r"):
+            return True
+
+    def load_save_file(self, descriptor):
+        filename = self.t_dir.text() + "/wrapped.txt"
+        path = os.path.exists(filename)
+        if not self.file_exist(path, descriptor):
+            return
+        with open(filename, descriptor, encoding="utf-8") as file:
+            if descriptor == "r":
+                self.textarea.setPlainText(file.read())
+            if descriptor == "w":
+                file.write(self.textarea.toPlainText())
+                QMessageBox.question(self, "Done!!!", "File wrapped.txt save to work directory", QMessageBox.Ok)

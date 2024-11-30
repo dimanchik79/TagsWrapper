@@ -176,7 +176,7 @@ p, li { white-space: pre-wrap; }
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">color: green;</string>
     </property>
     <property name="text">
      <string>PREVIEW</string>
@@ -644,116 +644,6 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>1050</x>
-      <y>600</y>
-      <width>21</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: white;</string>
-    </property>
-    <property name="text">
-     <string>ID</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="t_idl">
-    <property name="geometry">
-     <rect>
-      <x>1070</x>
-      <y>600</y>
-      <width>81</width>
-      <height>21</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_load">
-    <property name="geometry">
-     <rect>
-      <x>1160</x>
-      <y>594</y>
-      <width>101</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>8</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string>Load from DB</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_save">
-    <property name="geometry">
-     <rect>
-      <x>1160</x>
-      <y>634</y>
-      <width>101</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>8</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string>Save to DB</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>1050</x>
-      <y>640</y>
-      <width>21</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: white;</string>
-    </property>
-    <property name="text">
-     <string>ID</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="t_ids">
-    <property name="geometry">
-     <rect>
-      <x>1070</x>
-      <y>640</y>
-      <width>81</width>
-      <height>21</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btn_exit">
     <property name="geometry">
      <rect>
@@ -827,7 +717,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>1050</x>
-      <y>740</y>
+      <y>720</y>
       <width>211</width>
       <height>31</height>
      </rect>
@@ -840,7 +730,7 @@ p, li { white-space: pre-wrap; }
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">color: red;</string>
     </property>
     <property name="text">
      <string>Save to text file</string>
@@ -850,7 +740,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>1050</x>
-      <y>780</y>
+      <y>760</y>
       <width>211</width>
       <height>31</height>
      </rect>
@@ -863,7 +753,7 @@ p, li { white-space: pre-wrap; }
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">color: blue;</string>
     </property>
     <property name="text">
      <string>Load from text file</string>
@@ -984,8 +874,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="btn_help">
     <property name="geometry">
      <rect>
-      <x>1130</x>
-      <y>680</y>
+      <x>1140</x>
+      <y>620</y>
       <width>51</width>
       <height>41</height>
      </rect>
