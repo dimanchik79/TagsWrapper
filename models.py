@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from sqlalchemy import create_engine, Column, Integer, Text, String, MetaData
+from sqlalchemy import create_engine, Column, Integer, Text, String
 from sqlalchemy.orm import Session, declarative_base
 
 load_dotenv()
