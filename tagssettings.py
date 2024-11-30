@@ -30,3 +30,8 @@ SETTINGS = {
         'ids': None,
         'txt': None,
         }
+
+HELP = {
+        'RU': 'Программа предназначена для оборачивания простого текста в html-тэги. Так-то тут все понятно: вставляешь текст, выделяешь фрагмент и жмешь на кнопку нужного тега. Если, вдруг, накосячили - жмём два раза CTRL-z или на кнопочки с круглыми стрелочками. Результат работы можно сохранить в текстовый файл wrapper.txt по заранее выбранному пути',
+        'ENG': 'The program is designed to wrap plain text in html tags. So everything is clear here: you insert the text, select the fragment and click on the button of the desired tag. If, suddenly, you mess up, press CTRL-z twice or on the buttons with round arrows. The result of the work can be saved to a text file wrapper.txt by a pre-selected path',
+        }

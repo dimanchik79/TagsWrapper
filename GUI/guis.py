@@ -4,7 +4,7 @@ from PyQt5 import uic
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QFileDialog, QDialog, QLabel
 from models import DB, engine
-from tagssettings import TAGS, SETTINGS
+from tagssettings import TAGS, SETTINGS, HELP
 
 
 class Preview(QDialog):
@@ -20,7 +20,10 @@ class Help(QDialog):
     def __init__(self):
         super().__init__()
         uic.loadUi("GUI/help.ui", self)
-        self.setFixedSize(400, 335)
+        self.setFixedSize(400, 400)
+        self.help.setText(HELP['ENG'])
+        self.btn_ru.clicked.connect(lambda: self.help.setText(HELP['RU']))
+        self.btn_eng.clicked.connect(lambda: self.help.setText(HELP['ENG']))
 
 
 class MainClass(QMainWindow):
