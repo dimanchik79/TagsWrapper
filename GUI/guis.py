@@ -1,5 +1,3 @@
-import json
-from os import path
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QFileDialog, QDialog
 from models import DB, engine
