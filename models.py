@@ -10,6 +10,12 @@ session = Session(bind=engine)
 DB = declarative_base()
 
 class Answers(DB):
+    """
+    класс  описывает модель Answer из BD
+    id - id ответа
+    answer - текст ответа
+    mp3_file - имя привязанного mp3 файла
+    """
     __tablename__ = 'answers'
     id = Column(Integer, primary_key=True)
     answer = Column(Text, nullable=False)
