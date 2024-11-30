@@ -1,12 +1,27 @@
 import json
-from multiprocessing.spawn import old_main_modules
 from os import path
-
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QFileDialog
-
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QFileDialog, QDialog, QLabel
 from models import DB, engine
 from tagssettings import TAGS, SETTINGS
+
+
+class Preview(QDialog):
+    def __init__(self, html_text):
+        super().__init__()
+        self.html_text = html_text
+        uic.loadUi("GUI/preview.ui", self)
+        self.setFixedSize(1049, 898)
+        self.preview.setHtml(self.html_text)
+
+
+class Help(QDialog):
+    def __init__(self):
+        super().__init__()
+        uic.loadUi("GUI/help.ui", self)
+        self.setFixedSize(400, 335)
+
 
 class MainClass(QMainWindow):
     def __init__(self) -> None:
@@ -35,7 +50,7 @@ class MainClass(QMainWindow):
         buttons["sub"].clicked.connect(lambda: self.wrapped("sub"))
         buttons["sup"].clicked.connect(lambda: self.wrapped("sup"))
         buttons["tleft"].clicked.connect(lambda: self.wrapped("tleft"))
-        buttons["tcenter"].clicked.connect(lambda: self.wrapped("tright"))
+        buttons["tcenter"].clicked.connect(lambda: self.wrapped("tcenter"))
         buttons["tjustify"].clicked.connect(lambda: self.wrapped("tjustify"))
         buttons["tright"].clicked.connect(lambda: self.wrapped("tright"))
         buttons["li"].clicked.connect(lambda: self.wrapped("li"))
@@ -51,11 +66,14 @@ class MainClass(QMainWindow):
         self.btn_paste.clicked.connect(self.paste_text)
         self.btn_clear.clicked.connect(self.clear_text)
         self.btn_dir.clicked.connect(self.change_directory)
+        self.btn_preview.clicked.connect(self.preview)
+        self.btn_undo.clicked.connect(lambda : self.comeback("undo"))
+        self.btn_redo.clicked.connect(lambda : self.comeback("redo"))
+        self.btn_help.clicked.connect(self.help)
 
         self.btn_exit.clicked.connect(lambda: self.close())
 
     def closeEvent(self, event):
-        print("Close")
         self.close()
 
     def wrapped(self, tag_name):
@@ -70,7 +88,7 @@ class MainClass(QMainWindow):
         cursor.removeSelectedText()
         open_tag = TAGS[tag_name][0].replace('*style*', style_text)
         close_tag = TAGS[tag_name][1]
-        if tag_name in ["ulli", "p"]:
+        if tag_name != "table":
             text_list = old_text.split("\u2029")
             for line in text_list:
                 core_text = line[1:].strip() if (line[0] == "-" and tag_name == "ulli") else line.strip()
@@ -78,7 +96,7 @@ class MainClass(QMainWindow):
             else:
                 new_text = new_text[:-1]
                 if tag_name == "ulli":
-                    new_text = f"{TAGS['ul'][0]}\n{new_text}\n{TAGS['ul'][1]}"
+                    new_text = f"{TAGS['ul'][0].replace("*style*", style_text)}\n{new_text}\n{TAGS['ul'][1]}"
             cursor.insertText(new_text)
         else:
             cursor.insertText(f"{open_tag}{old_text}{close_tag}")
@@ -86,7 +104,7 @@ class MainClass(QMainWindow):
 
     def paste_text(self):
         pos_cur = self.textarea.textCursor()
-        pos_cur.insertText(QApplication.clipboard().text())
+        pos_cur.insertText(QApplication.clipboard().text().strip())
         self.textarea.setFocus()
 
     def clear_text(self):
@@ -96,7 +114,27 @@ class MainClass(QMainWindow):
             self.textarea.clear()
         self.textarea.setFocus()
 
+    def comeback(self, vector):
+        self.textarea.setFocus()
+        if vector == "undo":
+            self.textarea.undo()
+            self.textarea.undo()
+        if vector == "redo":
+            self.textarea.redo()
+            self.textarea.redo()
+
     def change_directory(self):
         directory = QFileDialog.getExistingDirectory(self, "Select working directory")
         self.t_dir.setText(directory)
         self.textarea.setFocus()
+
+    def preview(self):
+        text = self.textarea.toPlainText()
+        dialog = Preview(text)
+        dialog.show()
+        dialog.exec_()
+
+    def help(self):
+        dialog = Help()
+        dialog.show()
+        dialog.exec_()

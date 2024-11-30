@@ -141,7 +141,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>190</x>
       <y>830</y>
-      <width>161</width>
+      <width>81</width>
       <height>31</height>
      </rect>
     </property>
@@ -176,7 +176,7 @@ p, li { white-space: pre-wrap; }
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: green;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>PREVIEW</string>
@@ -363,7 +363,7 @@ p, li { white-space: pre-wrap; }
      <string notr="true">color: blue;</string>
     </property>
     <property name="text">
-     <string>&lt;ul&gt; &lt;li&gt; wrap selected text</string>
+     <string>&lt;ul-li&gt; wrap selected text</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_tleft">
@@ -927,29 +927,91 @@ p, li { white-space: pre-wrap; }
      <string>Work directory</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QPushButton" name="btn_undo">
     <property name="geometry">
      <rect>
-      <x>1130</x>
-      <y>682</y>
-      <width>41</width>
-      <height>41</height>
+      <x>290</x>
+      <y>830</y>
+      <width>31</width>
+      <height>31</height>
      </rect>
     </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
+    <property name="styleSheet">
+     <string notr="true">color: green;</string>
     </property>
     <property name="text">
      <string/>
     </property>
-    <property name="pixmap">
-     <pixmap>../IMG/help.png</pixmap>
+    <property name="icon">
+     <iconset>
+      <normaloff>../IMG/undo.png</normaloff>../IMG/undo.png</iconset>
     </property>
-    <property name="scaledContents">
-     <bool>true</bool>
+   </widget>
+   <widget class="QPushButton" name="btn_redo">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>830</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: green;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../IMG/redo.png</normaloff>../IMG/redo.png</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_help">
+    <property name="geometry">
+     <rect>
+      <x>1130</x>
+      <y>680</y>
+      <width>51</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #786f7f;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../IMG/help.png</normaloff>../IMG/help.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
     </property>
    </widget>
   </widget>
