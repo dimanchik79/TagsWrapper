@@ -28,7 +28,6 @@ class Help(QDialog):
 class MainClass(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
-        DB.metadata.create_all(engine)
         uic.loadUi("GUI/gui.ui", self)
         self.setFixedSize(1271, 871)
 
