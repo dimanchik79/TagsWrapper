@@ -105,7 +105,10 @@ class MainClass(QMainWindow):
         if tag_name != "table":
             text_list = old_text.split("\u2029")
             for line in text_list:
-                core_text = line[1:].strip() if (line[0] == "-" and tag_name == "ulli") else line.strip()
+                if line != '':
+                    core_text = line[1:].strip() if (line[0] == "-" and tag_name == "ulli") else line.strip()
+                else:
+                    core_text = ''
                 new_text += f"{open_tag}{core_text}{close_tag}\n"
             else:
                 new_text = new_text[:-1]
