@@ -1,9 +1,9 @@
 import json
 from os import path
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QFileDialog, QDialog, QLabel
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QFileDialog, QDialog
 from models import DB, engine
-from tagssettings import TAGS, SETTINGS, HELP
+from tagssettings import TAGS, HELP
 
 
 class Preview(QDialog):
@@ -39,9 +39,9 @@ class MainClass(QMainWindow):
                    'ul': self.btn_ul, 'table': self.btn_table, 'ulli': self.btn_ulli
                    }
 
-        if path.exists('settings.json'):
-            with open('temp.json', 'r') as file:
-                temp = json.load(file)
+        # if path.exists('settings.json'):
+        #     with open('temp.json', 'r') as file:
+        #         temp = json.load(file)
 
         buttons["div"].clicked.connect(lambda: self.wrapped("div"))
         buttons["span"].clicked.connect(lambda: self.wrapped("span"))
@@ -136,7 +136,8 @@ class MainClass(QMainWindow):
         dialog.show()
         dialog.exec_()
 
-    def help(self):
+    @staticmethod
+    def help():
         dialog = Help()
         dialog.show()
         dialog.exec_()
