@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication
-from GUI.guis import MainClass
+from guis import MainClass
 
 
 def main() -> None:
