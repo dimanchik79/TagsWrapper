@@ -17,7 +17,7 @@ TAGS = {
         'th': ('<th*style*>', '</th>'),
         'td': ('<td*style*>', '</td>'),
 
-        'p': ('<p style="text-indent: 25px;*style*">', '</p>'),
+        'p': ('<p*style*">', '</p>'),
         'ul': ('<ul style="text-indent: 0;*style*">', '</ul>'),
         'table': ('<table*style*>\n<thead>\n<tr>\n\n</tr>\n</thead>\n<tbody>\n<tr>\n\n</tr>\n', '</tbody>\n</table>'),
         'ulli': ('<li*style*>', '</li>'),

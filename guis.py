@@ -94,7 +94,7 @@ class MainClass(QMainWindow):
         text, new_text, style_text = '', '', ''
         cursor = self.textarea.textCursor()
         if self.addstyle.isChecked():
-            if tag_name in ['ul', 'p']:
+            if tag_name in ['ul']:
                 style_text = f'{self.t_style.text()}'
             else:
                 style_text = f' style="{self.t_style.text()}"' if self.addstyle.isChecked() else ''
