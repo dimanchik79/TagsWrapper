@@ -1,7 +1,6 @@
 import json
 from os import path
 from PyQt5 import uic
-from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QFileDialog, QDialog, QLabel
 from models import DB, engine
 from tagssettings import TAGS, SETTINGS, HELP
